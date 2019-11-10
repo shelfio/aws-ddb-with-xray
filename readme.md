@@ -11,9 +11,9 @@ $ yarn add @shelf/aws-ddb-with-xray
 ## Usage
 
 ```js
-const {DocumentClient} = require('@shelf/aws-ddb-with-xray');
+const {getDocumentClient} = require('@shelf/aws-ddb-with-xray');
 
-const ddb = new DocumentClient({
+const ddb = getDocumentClient({
   ddbParams: {region: 'us-east-1', convertEmptyValues: true},
   ddbClientParams: {region: 'us-east-1'}
 });
