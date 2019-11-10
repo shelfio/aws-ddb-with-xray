@@ -1,12 +1,13 @@
 import AWSXRay from 'aws-xray-sdk-core';
 import DynamoDB from 'aws-sdk/clients/dynamodb';
+import {DocumentClient} from 'aws-sdk/lib/dynamodb/document_client';
 
 interface GetDocumentClientParams {
   ddbParams: any;
   ddbClientParams: any;
 }
 
-export function getDocumentClient(params: GetDocumentClientParams): DynamoDB.DocumentClient {
+export function getDocumentClient(params: GetDocumentClientParams): DocumentClient {
   const config = {
     ...params.ddbClientParams,
     service: new DynamoDB(params.ddbParams)
