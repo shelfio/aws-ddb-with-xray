@@ -1,0 +1,75 @@
+{
+  "name": "@shelf/aws-ddb-with-xray",
+  "version": "0.0.0",
+  "description": "AWS DynamoDB Document Client initialized with X-Ray",
+  "license": "MIT",
+  "repository": "shelfio/aws-ddb-with-xray",
+  "author": {
+    "name": "Vlad Holubiev",
+    "email": "vlad@shelf.io",
+    "url": "shelf.io"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "build": "rm -rf lib/ && yarn build:types && babel src --out-dir lib --ignore '**/*.test.ts' --extensions '.ts' && find ./lib -name '*.test.d.ts' -delete",
+    "build:types": "tsc --emitDeclarationOnly --declaration --isolatedModules false --declarationDir lib",
+    "coverage": "jest --coverage",
+    "lint": "eslint . --fix",
+    "prepack": "yarn build",
+    "test": "jest src",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch"
+  },
+  "main": "lib",
+  "files": [
+    "lib"
+  ],
+  "types": "lib/index.d.ts",
+  "keywords": [
+    "aws sdk",
+    "dynamodb",
+    "xray",
+    "x-ray",
+    "document client"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/cli": "7.7.0",
+    "@babel/core": "7.7.2",
+    "@babel/preset-env": "7.7.1",
+    "@babel/preset-typescript": "7.7.2",
+    "@shelf/eslint-config": "0.10.0",
+    "@types/jest": "24.0.22",
+    "@types/node": "10",
+    "babel-jest": "24.9.0",
+    "eslint": "6.6.0",
+    "husky": "3.0.9",
+    "jest": "24.9.0",
+    "lint-staged": "9.4.2",
+    "prettier": "1.19.1",
+    "typescript": "3.7.2"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{html,json,md,yml}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
