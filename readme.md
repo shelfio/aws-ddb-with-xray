@@ -26,6 +26,10 @@ await ddb
   .promise();
 ```
 
+## Result
+
+![](./xray.png)
+
 ## License
 
 MIT © [Shelf](https://shelf.io)
