@@ -3,8 +3,8 @@ import DynamoDB from 'aws-sdk/clients/dynamodb';
 import {DocumentClient} from 'aws-sdk/lib/dynamodb/document_client';
 
 interface GetDocumentClientParams {
-  ddbParams: any;
-  ddbClientParams: any;
+  ddbParams: DynamoDB.Types.ClientConfiguration;
+  ddbClientParams: DocumentClient.DocumentClientOptions & DynamoDB.Types.ClientConfiguration;
 }
 
 export function getDocumentClient(params: GetDocumentClientParams): DocumentClient {
