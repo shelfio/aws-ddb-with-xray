@@ -1,0 +1,74 @@
+executors:
+  node10:
+    docker:
+      - image: circleci/node:10-browsers
+    working_directory: ~/repo
+    environment:
+      - TOOL_NODE_FLAGS: '--max-old-space-size=4800'
+
+version: 2.1
+
+jobs:
+  deps:
+    executor: node10
+    resource_class: large
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-deps-{{ checksum "yarn.lock" }}
+            - v1-deps-
+
+      - run:
+          name: install deps
+          command: |
+            yarn --pure-lockfile --no-progress
+
+      - save_cache:
+          paths:
+            - /tmp/dynamodb-local
+          key: v1-deps-{{ checksum "yarn.lock" }}
+
+      - run: yarn build
+
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - node_modules
+            - packages
+
+  lint:
+    executor: node10
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo
+
+      - run: yarn lint:ci
+
+  tests:
+    executor: node10
+    resource_class: large
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo
+
+      - run: yarn type-check
+      - run: yarn test
+
+workflows:
+  version: 2
+
+  build_deploy:
+    jobs:
+      - deps:
+          context: org-global
+
+      - lint:
+          requires:
+            - deps
+
+      - tests:
+          requires:
+            - deps
