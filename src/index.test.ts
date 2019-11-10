@@ -21,7 +21,7 @@ it('should work as a ddb client', async () => {
   const {Item} = await ddb
     .get({
       TableName: 'example_table',
-      Key: {hash_key: 'foo', range_key: 'bar', some: 'key'}
+      Key: {hash_key: 'foo', range_key: 'bar'}
     })
     .promise();
 
