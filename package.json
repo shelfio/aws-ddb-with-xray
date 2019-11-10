@@ -2,16 +2,25 @@
   "name": "@shelf/aws-ddb-with-xray",
   "version": "0.0.0",
   "description": "AWS DynamoDB Document Client initialized with X-Ray",
-  "license": "MIT",
+  "keywords": [
+    "aws sdk",
+    "document client",
+    "dynamodb",
+    "x-ray",
+    "xray"
+  ],
   "repository": "shelfio/aws-ddb-with-xray",
+  "license": "MIT",
   "author": {
     "name": "Vlad Holubiev",
     "email": "vlad@shelf.io",
     "url": "shelf.io"
   },
-  "engines": {
-    "node": ">=10"
-  },
+  "files": [
+    "lib"
+  ],
+  "main": "lib",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "rm -rf lib/ && yarn build:types && babel src --out-dir lib --ignore '**/*.test.ts' --extensions '.ts' && find ./lib -name '*.test.d.ts' -delete",
     "build:types": "tsc --emitDeclarationOnly --declaration --isolatedModules false --declarationDir lib",
@@ -23,18 +32,24 @@
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch"
   },
-  "main": "lib",
-  "files": [
-    "lib"
-  ],
-  "types": "lib/index.d.ts",
-  "keywords": [
-    "aws sdk",
-    "dynamodb",
-    "xray",
-    "x-ray",
-    "document client"
-  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{html,json,md,yml}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{ts,js}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "jest": {
+    "preset": "@shelf/jest-dynamodb"
+  },
   "dependencies": {
     "aws-xray-sdk-core": "2.4.0"
   },
@@ -59,23 +74,8 @@
   "peerDependencies": {
     "aws-sdk": "2.x.x"
   },
-  "jest": {
-    "preset": "@shelf/jest-dynamodb"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{ts,js}": [
-      "eslint --fix",
-      "git add"
-    ],
-    "*.{html,json,md,yml}": [
-      "prettier --write",
-      "git add"
-    ]
+  "engines": {
+    "node": ">=10"
   },
   "publishConfig": {
     "access": "public"
