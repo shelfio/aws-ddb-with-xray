@@ -62,11 +62,11 @@
     "@shelf/jest-dynamodb": "1.7.0",
     "@types/jest": "25.2.3",
     "@types/node": "10",
-    "babel-jest": "25.2.4",
+    "babel-jest": "26.0.1",
     "dynamodb-local": "0.0.31",
     "eslint": "6.8.0",
     "husky": "4.2.5",
-    "jest": "25.2.4",
+    "jest": "26.0.1",
     "lint-staged": "10.2.2",
     "prettier": "1.19.1",
     "typescript": "3.8.3"
