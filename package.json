@@ -60,7 +60,7 @@
     "@babel/preset-typescript": "7.9.0",
     "@shelf/eslint-config": "0.16.0",
     "@shelf/jest-dynamodb": "1.7.0",
-    "@types/jest": "25.2.3",
+    "@types/jest": "26.0.3",
     "@types/node": "10",
     "babel-jest": "26.0.1",
     "dynamodb-local": "0.0.31",
