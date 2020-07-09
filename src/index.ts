@@ -10,7 +10,7 @@ interface GetDocumentClientParams {
 export function getDocumentClient(params: GetDocumentClientParams): DocumentClient {
   const config = {
     ...params.ddbClientParams,
-    service: new DynamoDB(params.ddbParams)
+    service: new DynamoDB(params.ddbParams),
   };
 
   const ddbDocumentClient = new DynamoDB.DocumentClient(config);
