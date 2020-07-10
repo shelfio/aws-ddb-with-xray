@@ -64,10 +64,10 @@
     "@types/node": "10",
     "babel-jest": "26.0.1",
     "dynamodb-local": "0.0.31",
-    "eslint": "7.1.0",
+    "eslint": "7.4.0",
     "husky": "4.2.5",
     "jest": "26.0.1",
-    "lint-staged": "10.2.2",
+    "lint-staged": "10.2.11",
     "prettier": "2.0.5",
     "typescript": "3.9.6"
   },
