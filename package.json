@@ -64,7 +64,7 @@
     "@types/node": "10",
     "babel-jest": "26.1.0",
     "dynamodb-local": "0.0.31",
-    "eslint": "7.5.0",
+    "eslint": "7.6.0",
     "husky": "4.2.5",
     "jest": "26.1.0",
     "lint-staged": "10.2.11",
