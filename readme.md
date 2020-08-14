@@ -15,13 +15,13 @@ const {getDocumentClient} = require('@shelf/aws-ddb-with-xray');
 
 const ddb = getDocumentClient({
   ddbParams: {region: 'us-east-1', convertEmptyValues: true},
-  ddbClientParams: {region: 'us-east-1'}
+  ddbClientParams: {region: 'us-east-1'},
 });
 
 await ddb
   .get({
     TableName: 'foo',
-    Key: {hash_key: 'bar'}
+    Key: {hash_key: 'bar'},
   })
   .promise();
 ```
@@ -29,6 +29,15 @@ await ddb
 ## Result
 
 ![](./xray.png)
+
+## Publish
+
+```sh
+$ git checkout master
+$ yarn version
+$ yarn publish
+$ git push origin master --tags
+```
 
 ## License
 
