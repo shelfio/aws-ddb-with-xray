@@ -16,11 +16,11 @@
     "email": "vlad@shelf.io",
     "url": "shelf.io"
   },
-  "main": "lib",
-  "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
+  "main": "lib",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "rm -rf lib/ && yarn build:types && babel src --out-dir lib --ignore '**/*.test.ts' --extensions '.ts' && find ./lib -name '*.test.d.ts' -delete",
     "build:types": "tsc --emitDeclarationOnly --declaration --isolatedModules false --declarationDir lib",
@@ -34,15 +34,16 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "post-commit": "git update-index --again"
     }
   },
   "lint-staged": {
-    "*.{html,json,md,yml}": [
+    "*.{html,md,yml}": [
       "prettier --write",
       "git add"
     ],
-    "*.{ts,js}": [
+    "*.{js,ts,json}": [
       "eslint --fix",
       "git add"
     ]
