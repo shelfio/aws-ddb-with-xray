@@ -11,12 +11,11 @@ parameters:
 commands:
   install_deps:
     steps:
-      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
       - node/install-packages:
           pkg-manager: yarn
           cache-version: v1-all
           cache-only-lockfile: true
-          app-dir: $HOME/repo
+          app-dir: ~/repo
           override-ci-command: yarn install --pure-lockfile --no-progress
 
 jobs:
@@ -24,7 +23,7 @@ jobs:
     executor:
       name: node/default
       tag: << pipeline.parameters.node_version >>
-    working_directory: $HOME/repo
+    working_directory: ~/repo
     steps:
       - checkout
       - install_deps
