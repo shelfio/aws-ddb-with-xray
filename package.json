@@ -16,11 +16,11 @@
     "email": "vlad@shelf.io",
     "url": "shelf.io"
   },
+  "main": "lib",
+  "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
-  "main": "lib",
-  "types": "lib/index.d.ts",
   "scripts": {
     "build": "rm -rf lib/ && yarn build:types && babel src --out-dir lib --ignore '**/*.test.ts' --extensions '.ts' && find ./lib -name '*.test.d.ts' -delete",
     "build:types": "tsc --emitDeclarationOnly --declaration --isolatedModules false --declarationDir lib",
@@ -62,8 +62,8 @@
     "@shelf/eslint-config": "0.19.0",
     "@shelf/jest-dynamodb": "1.7.0",
     "@types/jest": "26.0.9",
-    "@types/node": "12",
-    "aws-sdk": "2.631.0",
+    "@types/node": "16",
+    "aws-sdk": "2.1055.0",
     "babel-jest": "26.3.0",
     "dynamodb-local": "0.0.31",
     "eslint": "7.6.0",
@@ -77,7 +77,7 @@
     "aws-sdk": "2.x.x"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=16"
   },
   "publishConfig": {
     "access": "public"
