@@ -15,8 +15,8 @@ type GetDocumentClientParams = {
 export function getDocumentClient(params: GetDocumentClientParams): DocumentClient {
   const config = {
     ...params.ddbClientParams,
-    credentials: params.credentials,
-    service: new DynamoDB(params.ddbParams),
+    credentials: params?.credentials,
+    service: new DynamoDB({...params.ddbParams, credentials: params.credentials}),
   };
 
   const ddbDocumentClient = new DynamoDB.DocumentClient(config);
