@@ -21,7 +21,7 @@ const getCredentials = (credentials?: GetDocumentClientParams['credentials']) =>
 };
 
 export function getDocumentClient(params: GetDocumentClientParams): DocumentClient {
-  console.log('Credentials: ', params.credentials);
+
   const config = {
     ...params.ddbClientParams,
     ...getCredentials(params.credentials),
