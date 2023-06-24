@@ -12,11 +12,23 @@ type GetDocumentClientParams = {
   };
 };
 
+const getCredentials = (credentials?: GetDocumentClientParams['credentials']) => {
+  if (credentials && Object.keys(credentials).length > 0) {
+    return {credentials};
+  }
+
+  return {};
+};
+
 export function getDocumentClient(params: GetDocumentClientParams): DocumentClient {
+  console.log('Credentials: ', params.credentials);
   const config = {
     ...params.ddbClientParams,
-    credentials: params?.credentials,
-    service: new DynamoDB({...params.ddbParams, credentials: params.credentials}),
+    ...getCredentials(params.credentials),
+    service: new DynamoDB({
+      ...params.ddbParams,
+      ...getCredentials(params.credentials),
+    }),
   };
 
   const ddbDocumentClient = new DynamoDB.DocumentClient(config);
