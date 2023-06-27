@@ -1,30 +1,42 @@
-import AWSXRay from 'aws-xray-sdk-core';
-import DynamoDB from 'aws-sdk/clients/dynamodb';
-import type {DocumentClient} from 'aws-sdk/lib/dynamodb/document_client';
+import {captureAWSv3Client} from 'aws-xray-sdk-core';
+import {DynamoDBClient} from '@aws-sdk/client-dynamodb';
+import {DynamoDBDocumentClient} from '@aws-sdk/lib-dynamodb';
 
-type GetDocumentClientParams = {
-  ddbParams: DynamoDB.Types.ClientConfiguration;
-  ddbClientParams: DocumentClient.DocumentClientOptions & DynamoDB.Types.ClientConfiguration;
-  credentials?: {
-    accessKeyId: string;
-    secretAccessKey: string;
-    sessionToken: string;
+const isTest = process.env.JEST_WORKER_ID;
+const endpoint = process.env.DYNAMODB_ENDPOINT;
+const region = process.env.REGION;
+
+export type Credentials = {
+  accessKeyId: string;
+  secretAccessKey: string;
+  sessionToken: string;
+};
+const getDDBClient = (credentials?: Credentials) =>
+  new DynamoDBClient({
+    ...(isTest && {
+      endpoint: endpoint ?? 'http://localhost:8000',
+      tls: false,
+      region: region ?? 'local-env',
+    }),
+    credentials: getCredentials(credentials),
+  });
+
+const getCredentials = (credentials?: Credentials) => {
+  if (credentials && Object.keys(credentials).length) {
+    return credentials;
+  }
+
+  return {
+    accessKeyId: 'fakeMyKeyId',
+    secretAccessKey: 'fakeSecretAccessKey',
   };
 };
 
-export function getDocumentClient(params: GetDocumentClientParams): DocumentClient {
-  const config = {
-    ...params.ddbClientParams,
-    credentials: params.credentials,
-    service: new DynamoDB(params.ddbParams),
-  };
-
-  const ddbDocumentClient = new DynamoDB.DocumentClient(config);
+export function getDocumentClient(credentials?: Credentials): DynamoDBClient {
+  const ddbDocumentClient = DynamoDBDocumentClient.from(getDDBClient(credentials));
 
   if (process.env.AWS_XRAY_DAEMON_ADDRESS) {
-    // @see https://git.io/JeaSG
-    // @ts-ignore
-    AWSXRay.captureAWSClient(ddbDocumentClient.service);
+    captureAWSv3Client(ddbDocumentClient);
   }
 
   return ddbDocumentClient;
