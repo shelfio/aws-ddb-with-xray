@@ -6,8 +6,8 @@ import {DynamoDBDocumentClient} from '@aws-sdk/lib-dynamodb';
 
 type GetClientParams = {
   credentials?: Credentials;
+  documentClientConfig?: TranslateConfig;
   clientConfig: DynamoDBClientConfig;
-  documentClientConfig: TranslateConfig;
 };
 
 const isTest = process.env.JEST_WORKER_ID;
