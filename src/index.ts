@@ -1,6 +1,9 @@
 import {captureAWSv3Client} from 'aws-xray-sdk-core';
+import type {DynamoDBClientConfig} from '@aws-sdk/client-dynamodb';
 import {DynamoDBClient} from '@aws-sdk/client-dynamodb';
 import {DynamoDBDocumentClient} from '@aws-sdk/lib-dynamodb';
+
+type GetClientParams = {credentials?: Credentials; clientConfig: DynamoDBClientConfig};
 
 const isTest = process.env.JEST_WORKER_ID;
 const endpoint = process.env.DYNAMODB_ENDPOINT;
@@ -11,14 +14,15 @@ export type Credentials = {
   secretAccessKey: string;
   sessionToken: string;
 };
-const getDDBClient = (credentials?: Credentials) =>
+const getDDBClient = (params?: GetClientParams) =>
   new DynamoDBClient({
     ...(isTest && {
       endpoint: endpoint ?? 'http://localhost:8000',
       tls: false,
       region: region ?? 'local-env',
     }),
-    credentials: getCredentials(credentials),
+    ...(params?.clientConfig && params.clientConfig),
+    credentials: getCredentials(params?.credentials),
   });
 
 const getCredentials = (credentials?: Credentials) => {
@@ -32,8 +36,8 @@ const getCredentials = (credentials?: Credentials) => {
   };
 };
 
-export function getDocumentClient(credentials?: Credentials): DynamoDBClient {
-  const ddbDocumentClient = DynamoDBDocumentClient.from(getDDBClient(credentials));
+export function getDocumentClient(params?: GetClientParams): DynamoDBClient {
+  const ddbDocumentClient = DynamoDBDocumentClient.from(getDDBClient(params));
 
   if (process.env.AWS_XRAY_DAEMON_ADDRESS) {
     captureAWSv3Client(ddbDocumentClient);
