@@ -64,7 +64,7 @@
     "@shelf/jest-dynamodb": "3.3.1",
     "@shelf/prettier-config": "1.0.0",
     "@shelf/tsconfig": "0.0.9",
-    "@types/jest": "29.5.1",
+    "@types/jest": "29.5.2",
     "@types/node": "16",
     "aws-sdk": "2.1403.0",
     "dynamodb-local": "0.0.31",
