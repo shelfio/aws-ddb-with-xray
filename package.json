@@ -66,7 +66,7 @@
     "@shelf/tsconfig": "0.0.9",
     "@types/jest": "29.5.2",
     "@types/node": "16",
-    "aws-sdk": "2.1403.0",
+    "aws-sdk": "2.1415.0",
     "dynamodb-local": "0.0.31",
     "eslint": "8.44.0",
     "husky": "8.0.3",
