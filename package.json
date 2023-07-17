@@ -58,8 +58,8 @@
     "aws-xray-sdk-core": "3.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.22.5",
-    "@babel/core": "7.22.5",
+    "@babel/cli": "7.22.9",
+    "@babel/core": "7.22.9",
     "@shelf/babel-config": "1.2.0",
     "@shelf/eslint-config": "2.22.3",
     "@shelf/jest-dynamodb": "3.3.1",
