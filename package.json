@@ -54,6 +54,8 @@
     "preset": "@shelf/jest-dynamodb"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "3.370.0",
+    "@aws-sdk/lib-dynamodb": "3.370.0",
     "@aws/dynamodb-expressions": "0.7.3",
     "aws-xray-sdk-core": "3.5.0"
   },
