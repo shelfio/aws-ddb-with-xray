@@ -27,18 +27,24 @@ const getDDBClient = (params?: GetClientParams) =>
       region: region ?? 'local-env',
     }),
     ...(params?.clientConfig && params.clientConfig),
-    credentials: getCredentials(params?.credentials),
+    ...getCredentials(params?.credentials),
   });
 
 const getCredentials = (credentials?: Credentials) => {
   if (credentials && Object.keys(credentials).length) {
-    return credentials;
+    return {credentials};
   }
 
-  return {
-    accessKeyId: 'fakeMyKeyId',
-    secretAccessKey: 'fakeSecretAccessKey',
-  };
+  if (isTest) {
+    return {
+      credentials: {
+        accessKeyId: 'fakeMyKeyId',
+        secretAccessKey: 'fakeSecretAccessKey',
+      },
+    };
+  }
+
+  return {};
 };
 
 export function getDocumentClient(params?: GetClientParams): DynamoDBClient {
