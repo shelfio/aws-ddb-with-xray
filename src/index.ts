@@ -14,7 +14,7 @@ type GetClientParams = {
 const isTest = process.env.JEST_WORKER_ID;
 const endpoint = process.env.DYNAMODB_ENDPOINT;
 const region = process.env.REGION;
-let client = null;
+let client: DynamoDBClient;
 
 export type Credentials = {
   accessKeyId: string;
