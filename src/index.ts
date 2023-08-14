@@ -31,11 +31,11 @@ const getDDBClient = (params?: GetClientParams) => {
       }),
       ...(params?.clientConfig && params.clientConfig),
       ...getCredentials(params?.credentials),
-   })
+    });
   }
 
   if (client) {
-    return client
+    return client;
   }
 
   client = new DynamoDBClient({
@@ -46,9 +46,9 @@ const getDDBClient = (params?: GetClientParams) => {
     }),
     ...(params?.clientConfig && params.clientConfig),
     ...getCredentials(params?.credentials),
- })
+  });
 
- return client;
+  return client;
 };
 
 const getCredentials = (credentials?: Credentials) => {
