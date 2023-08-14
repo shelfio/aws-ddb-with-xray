@@ -8,19 +8,37 @@ type GetClientParams = {
   credentials?: Credentials;
   documentClientConfig?: TranslateConfig;
   clientConfig: DynamoDBClientConfig;
+  singleton?: boolean;
 };
 
 const isTest = process.env.JEST_WORKER_ID;
 const endpoint = process.env.DYNAMODB_ENDPOINT;
 const region = process.env.REGION;
+let client = null;
 
 export type Credentials = {
   accessKeyId: string;
   secretAccessKey: string;
   sessionToken: string;
 };
-const getDDBClient = (params?: GetClientParams) =>
-  new DynamoDBClient({
+const getDDBClient = (params?: GetClientParams) => {
+  if (!params?.singleton) {
+    return new DynamoDBClient({
+      ...(isTest && {
+        endpoint: endpoint ?? 'http://localhost:8000',
+        tls: false,
+        region: region ?? 'local-env',
+      }),
+      ...(params?.clientConfig && params.clientConfig),
+      ...getCredentials(params?.credentials),
+   })
+  }
+
+  if (client) {
+    return client
+  }
+
+  client = new DynamoDBClient({
     ...(isTest && {
       endpoint: endpoint ?? 'http://localhost:8000',
       tls: false,
@@ -28,7 +46,10 @@ const getDDBClient = (params?: GetClientParams) =>
     }),
     ...(params?.clientConfig && params.clientConfig),
     ...getCredentials(params?.credentials),
-  });
+ })
+
+ return client;
+};
 
 const getCredentials = (credentials?: Credentials) => {
   if (credentials && Object.keys(credentials).length) {
