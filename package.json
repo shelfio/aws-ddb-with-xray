@@ -1,6 +1,6 @@
 {
   "name": "@shelf/aws-ddb-with-xray",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "AWS DynamoDB Document Client initialized with X-Ray",
   "keywords": [
     "aws sdk",
