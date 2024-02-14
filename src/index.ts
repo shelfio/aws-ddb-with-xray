@@ -9,6 +9,7 @@ type GetClientParams = {
   documentClientConfig?: TranslateConfig;
   clientConfig: DynamoDBClientConfig;
   singleton?: boolean;
+  forceNew?: boolean;
 };
 
 const isTest = process.env.JEST_WORKER_ID;
@@ -34,7 +35,9 @@ const getDDBClient = (params?: GetClientParams) => {
     });
   }
 
-  if (client) {
+  const forceNew = params?.forceNew || false;
+
+  if (client && !forceNew) {
     return client;
   }
 
