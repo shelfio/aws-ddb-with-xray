@@ -41,6 +41,10 @@ const getDDBClient = (params?: GetClientParams) => {
     return client;
   }
 
+  if (client instanceof DynamoDBClient) {
+    client.destroy();
+  }
+
   client = new DynamoDBClient({
     ...(isTest && {
       endpoint: endpoint ?? 'http://localhost:8000',
