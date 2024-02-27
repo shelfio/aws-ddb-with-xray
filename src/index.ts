@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import {captureAWSv3Client} from 'aws-xray-sdk-core';
 import type {DynamoDBClientConfig} from '@aws-sdk/client-dynamodb';
 import {DynamoDBClient} from '@aws-sdk/client-dynamodb';
@@ -10,12 +11,14 @@ type GetClientParams = {
   clientConfig: DynamoDBClientConfig;
   singleton?: boolean;
   forceNew?: boolean;
+  marker?: string; // label for the client, use for multi account setup
 };
 
 const isTest = process.env.JEST_WORKER_ID;
 const endpoint = process.env.DYNAMODB_ENDPOINT;
 const region = process.env.REGION;
-let client: DynamoDBClient;
+const clientsStore: {[key: string]: DynamoDBClient} = {};
+const DEFAULT_MARKER = 'default';
 
 export type Credentials = {
   accessKeyId: string;
@@ -35,6 +38,8 @@ const getDDBClient = (params?: GetClientParams) => {
     });
   }
 
+  const marker = params.marker || DEFAULT_MARKER;
+  let client = clientsStore[marker];
   const forceNew = params?.forceNew || false;
 
   if (client && !forceNew) {
@@ -86,4 +91,10 @@ export function getDocumentClient(params?: GetClientParams): DynamoDBClient {
   }
 
   return ddbDocumentClient;
+}
+
+export function destroyClient(marker = DEFAULT_MARKER): void {
+  if (clientsStore[marker] instanceof DynamoDBClient) {
+    clientsStore[marker].destroy();
+  }
 }
