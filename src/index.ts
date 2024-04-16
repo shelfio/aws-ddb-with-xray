@@ -1,9 +1,9 @@
 /* eslint-disable complexity */
-import {captureAWSv3Client} from 'aws-xray-sdk-core';
 import type {DynamoDBClientConfig} from '@aws-sdk/client-dynamodb';
 import {DynamoDBClient} from '@aws-sdk/client-dynamodb';
 import type {TranslateConfig} from '@aws-sdk/lib-dynamodb';
 import {DynamoDBDocumentClient} from '@aws-sdk/lib-dynamodb';
+import {captureAWSv3Client} from 'aws-xray-sdk-core';
 
 type GetClientParams = {
   credentials?: Credentials;
@@ -12,6 +12,7 @@ type GetClientParams = {
   singleton?: boolean;
   forceNew?: boolean;
   marker?: string; // label for the client, use for multi account setup
+  logger: DynamoDBClientConfig['logger'];
 };
 
 const isTest = process.env.JEST_WORKER_ID;
@@ -35,6 +36,7 @@ const getDDBClient = (params?: GetClientParams) => {
       }),
       ...(params?.clientConfig && params.clientConfig),
       ...getCredentials(params?.credentials),
+      logger: params?.logger,
     });
   }
 
@@ -58,6 +60,7 @@ const getDDBClient = (params?: GetClientParams) => {
     }),
     ...(params?.clientConfig && params.clientConfig),
     ...getCredentials(params?.credentials),
+    logger: params?.logger,
   });
 
   return client;
