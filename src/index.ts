@@ -12,7 +12,6 @@ type GetClientParams = {
   singleton?: boolean;
   forceNew?: boolean;
   marker?: string; // label for the client, use for multi account setup
-  logger: DynamoDBClientConfig['logger'];
 };
 
 const isTest = process.env.JEST_WORKER_ID;
@@ -36,7 +35,6 @@ const getDDBClient = (params?: GetClientParams) => {
       }),
       ...(params?.clientConfig && params.clientConfig),
       ...getCredentials(params?.credentials),
-      logger: params?.logger,
     });
   }
 
@@ -60,7 +58,6 @@ const getDDBClient = (params?: GetClientParams) => {
     }),
     ...(params?.clientConfig && params.clientConfig),
     ...getCredentials(params?.credentials),
-    logger: params?.logger,
   });
 
   return client;
