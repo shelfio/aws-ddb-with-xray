@@ -17,3 +17,4 @@ yarn.lock
 !.idea/modules.xml
 !.idea/vcs.xml
 !.idea/jsonSchemas.xml
+.aider*
