@@ -34,6 +34,7 @@ const getDDBClient = (params?: GetClientParams) => {
         region: region ?? 'local-env',
       }),
       ...(params?.clientConfig && params.clientConfig),
+      ...(process.env.FORCE_REGION && {region: process.env.FORCE_REGION}),
       ...getCredentials(params?.credentials),
     });
   }
@@ -57,6 +58,7 @@ const getDDBClient = (params?: GetClientParams) => {
       region: region ?? 'local-env',
     }),
     ...(params?.clientConfig && params.clientConfig),
+    ...(process.env.FORCE_REGION && {region: process.env.FORCE_REGION}),
     ...getCredentials(params?.credentials),
   });
 
