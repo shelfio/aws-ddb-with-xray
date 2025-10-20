@@ -38,14 +38,6 @@
       "post-commit": "git update-index --again"
     }
   },
-  "lint-staged": {
-    "*.{html,json,md,yml}": [
-      "prettier --write --ignore-path=./.eslintignore"
-    ],
-    "*.{ts,js}": [
-      "eslint --fix"
-    ]
-  },
   "babel": {
     "extends": "@shelf/babel-config/backend"
   },
