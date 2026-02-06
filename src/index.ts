@@ -1,9 +1,9 @@
 /* eslint-disable complexity */
-import type {DynamoDBClientConfig} from '@aws-sdk/client-dynamodb';
 import {DynamoDBClient} from '@aws-sdk/client-dynamodb';
-import type {TranslateConfig} from '@aws-sdk/lib-dynamodb';
 import {DynamoDBDocumentClient} from '@aws-sdk/lib-dynamodb';
 import {captureAWSv3Client} from 'aws-xray-sdk-core';
+import type {TranslateConfig} from '@aws-sdk/lib-dynamodb';
+import type {DynamoDBClientConfig} from '@aws-sdk/client-dynamodb';
 
 type GetClientParams = {
   credentials?: Credentials;
