@@ -8,7 +8,7 @@ node_modules/
 junit.xml
 draft.js
 *.draft.js
-yarn.lock
+pnpm-lock.yaml
 
 .idea/
 !.idea/dictionaries/

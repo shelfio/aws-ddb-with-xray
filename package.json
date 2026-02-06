@@ -22,12 +22,12 @@
     "lib"
   ],
   "scripts": {
-    "build": "rm -rf lib/ && yarn build:types && babel src --out-dir lib --ignore '**/*.test.ts' --extensions '.ts' && find ./lib -name '*.test.d.ts' -delete",
+    "build": "rm -rf lib/ && pnpm build:types && babel src --out-dir lib --ignore '**/*.test.ts' --extensions '.ts' && find ./lib -name '*.test.d.ts' -delete",
     "build:types": "tsc --emitDeclarationOnly --declaration --isolatedModules false --declarationDir lib",
     "coverage": "jest --coverage",
     "lint": "eslint . --ext .js,.ts,.json --fix",
     "lint:ci": "eslint . --ext .js,.ts,.json",
-    "prepack": "yarn build",
+    "prepack": "pnpm build",
     "test": "jest src --runInBand --forceExit",
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch"
