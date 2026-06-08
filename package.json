@@ -55,7 +55,7 @@
     "@shelf/babel-config": "3.0.0",
     "@shelf/eslint-config": "5.4.1",
     "@shelf/jest-dynamodb": "4.0.2",
-    "@shelf/prettier-config": "1.0.0",
+    "@shelf/prettier-config": "1.1.1",
     "@shelf/tsconfig": "0.1.0",
     "@types/jest": "30.0.0",
     "@types/node": "25.2.1",
