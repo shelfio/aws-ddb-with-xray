@@ -49,7 +49,7 @@
     "aws-xray-sdk-core": "3.12.0"
   },
   "devDependencies": {
-    "@babel/core": "7.29.0",
+    "@babel/core": "7.29.7",
     "@babel/preset-env": "7.29.7",
     "@babel/preset-typescript": "7.29.7",
     "@shelf/eslint-config": "6.3.0",
