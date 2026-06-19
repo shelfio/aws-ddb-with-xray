@@ -22,11 +22,11 @@
     "lib"
   ],
   "scripts": {
-    "build": "rm -rf lib/ && pnpm build:types && babel src --out-dir lib --ignore '**/*.test.ts' --extensions '.ts' && find ./lib -name '*.test.d.ts' -delete",
-    "build:types": "tsc --emitDeclarationOnly --declaration --isolatedModules false --declarationDir lib",
+    "build": "rm -rf lib/ && tsc -p tsconfig.build.json",
+    "build:types": "tsc -p tsconfig.build.json --emitDeclarationOnly",
     "coverage": "jest --coverage",
-    "lint": "eslint . --ext .js,.ts,.json --fix",
-    "lint:ci": "eslint . --ext .js,.ts,.json",
+    "lint": "oxfmt && eslint . --fix",
+    "lint:ci": "oxfmt --check && eslint .",
     "prepack": "pnpm build",
     "test": "jest src --runInBand --forceExit",
     "type-check": "tsc --noEmit",
@@ -38,43 +38,37 @@
       "post-commit": "git update-index --again"
     }
   },
-  "babel": {
-    "extends": "@shelf/babel-config/backend"
-  },
-  "prettier": "@shelf/prettier-config",
   "jest": {
-    "preset": "@shelf/jest-dynamodb"
+    "preset": "@shelf/jest-dynamodb",
+    "transform": {
+      "^.+\\.[tj]s$": "babel-jest"
+    }
   },
   "dependencies": {
     "@aws/dynamodb-expressions": "0.7.3",
     "aws-xray-sdk-core": "3.12.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.28.6",
     "@babel/core": "7.29.0",
-    "@shelf/babel-config": "3.0.0",
-    "@shelf/eslint-config": "5.4.1",
+    "@babel/preset-env": "7.29.7",
+    "@babel/preset-typescript": "7.29.7",
+    "@shelf/eslint-config": "6.3.0",
     "@shelf/jest-dynamodb": "4.0.2",
-    "@shelf/prettier-config": "1.0.0",
+    "@shelf/prettier-config": "1.1.1",
     "@shelf/tsconfig": "0.1.0",
     "@types/jest": "30.0.0",
     "@types/node": "25.2.1",
-    "eslint": "9.39.2",
+    "babel-jest": "30.2.0",
+    "eslint": "10.4.1",
     "husky": "9.1.7",
     "jest": "30.2.0",
     "lint-staged": "16.2.7",
-    "prettier": "3.8.1",
+    "oxfmt": "0.53.0",
     "typescript": "5.9.3"
   },
   "peerDependencies": {
     "@aws-sdk/client-dynamodb": "3.x.x",
     "@aws-sdk/lib-dynamodb": "3.x.x"
-  },
-  "pnpm": {
-    "overrides": {
-      "@aws-sdk/xml-builder@3.972.4>fast-xml-parser": "5.3.5",
-      "lodash": "4.18.1"
-    }
   },
   "engines": {
     "node": ">=16"
@@ -84,9 +78,10 @@
   },
   "lint-staged": {
     "*.{html,json,md,yml}": [
-      "prettier --write --ignore-path=./.eslintignore"
+      "oxfmt --no-error-on-unmatched-pattern"
     ],
     "*.{ts,js}": [
+      "oxfmt --no-error-on-unmatched-pattern",
       "eslint --fix"
     ]
   }
