@@ -22,8 +22,8 @@
     "lib"
   ],
   "scripts": {
-    "build": "rm -rf lib/ && pnpm build:types && babel src --out-dir lib --ignore '**/*.test.ts' --extensions '.ts' && find ./lib -name '*.test.d.ts' -delete",
-    "build:types": "tsc --emitDeclarationOnly --declaration --isolatedModules false --declarationDir lib",
+    "build": "rm -rf lib/ && tsc -p tsconfig.build.json",
+    "build:types": "tsc -p tsconfig.build.json --emitDeclarationOnly",
     "coverage": "jest --coverage",
     "lint": "eslint . --fix",
     "lint:ci": "eslint .",
@@ -38,21 +38,21 @@
       "post-commit": "git update-index --again"
     }
   },
-  "babel": {
-    "extends": "@shelf/babel-config/backend"
-  },
   "prettier": "@shelf/prettier-config",
   "jest": {
-    "preset": "@shelf/jest-dynamodb"
+    "preset": "@shelf/jest-dynamodb",
+    "transform": {
+      "^.+\\.[tj]s$": "babel-jest"
+    }
   },
   "dependencies": {
     "@aws/dynamodb-expressions": "0.7.3",
     "aws-xray-sdk-core": "3.12.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.28.6",
     "@babel/core": "7.29.0",
-    "@shelf/babel-config": "3.0.0",
+    "@babel/preset-env": "7.29.7",
+    "@babel/preset-typescript": "7.29.7",
     "@shelf/eslint-config": "6.3.0",
     "@shelf/jest-dynamodb": "4.0.2",
     "@shelf/prettier-config": "1.0.0",
@@ -60,6 +60,7 @@
     "@types/jest": "30.0.0",
     "@types/node": "25.2.1",
     "eslint": "10.4.1",
+    "babel-jest": "30.2.0",
     "husky": "9.1.7",
     "jest": "30.2.0",
     "lint-staged": "16.2.7",
