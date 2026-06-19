@@ -25,8 +25,8 @@
     "build": "rm -rf lib/ && tsc -p tsconfig.build.json",
     "build:types": "tsc -p tsconfig.build.json --emitDeclarationOnly",
     "coverage": "jest --coverage",
-    "lint": "eslint . --fix",
-    "lint:ci": "eslint .",
+    "lint": "oxfmt && eslint . --fix",
+    "lint:ci": "oxfmt --check && eslint .",
     "prepack": "pnpm build",
     "test": "jest src --runInBand --forceExit",
     "type-check": "tsc --noEmit",
@@ -38,7 +38,6 @@
       "post-commit": "git update-index --again"
     }
   },
-  "prettier": "@shelf/prettier-config",
   "jest": {
     "preset": "@shelf/jest-dynamodb",
     "transform": {
@@ -55,16 +54,16 @@
     "@babel/preset-typescript": "7.29.7",
     "@shelf/eslint-config": "6.3.0",
     "@shelf/jest-dynamodb": "4.0.2",
-    "@shelf/prettier-config": "1.0.0",
+    "@shelf/prettier-config": "1.1.1",
     "@shelf/tsconfig": "0.1.0",
     "@types/jest": "30.0.0",
     "@types/node": "25.2.1",
-    "eslint": "10.4.1",
     "babel-jest": "30.2.0",
+    "eslint": "10.4.1",
     "husky": "9.1.7",
     "jest": "30.2.0",
     "lint-staged": "16.2.7",
-    "prettier": "3.8.1",
+    "oxfmt": "0.53.0",
     "typescript": "5.9.3"
   },
   "peerDependencies": {
@@ -79,9 +78,10 @@
   },
   "lint-staged": {
     "*.{html,json,md,yml}": [
-      "prettier --write --ignore-path=./.eslintignore"
+      "oxfmt --no-error-on-unmatched-pattern"
     ],
     "*.{ts,js}": [
+      "oxfmt --no-error-on-unmatched-pattern",
       "eslint --fix"
     ]
   }
