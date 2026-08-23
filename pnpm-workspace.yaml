@@ -15,3 +15,12 @@ overrides:
 ignoredBuiltDependencies:
   - aws-sdk
   - unrs-resolver
+nodeLinker: 'hoisted'
+trustPolicy: 'no-downgrade'
+blockExoticSubdeps: true
+minimumReleaseAge: 20160
+ignoreScripts: true
+minimumReleaseAgeExclude:
+  - '@shelf/*'
+trustPolicyExclude:
+  - 'semver'
